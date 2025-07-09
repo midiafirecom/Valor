@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Duplicador de Centavos</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-size: 2em;
+    }
+    #timer, #valor {
+      margin: 10px 0;
+    }
+    #mensagemFinal {
+      margin-top: 20px;
+      font-size: 0.8em;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="timer">60</div>
+  <div id="valor">R$ 0,01</div>
+  <div id="mensagemFinal"></div>
+
+  <script>
+    let segundos = 60;
+    let valorAtual = 0.01;
+
+    const timerEl = document.getElementById("timer");
+    const valorEl = document.getElementById("valor");
+    const mensagemEl = document.getElementById("mensagemFinal");
+
+    const formatarValor = (valor) => {
+      return valor.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    };
+
+    const intervalo = setInterval(() => {
+      segundos--;
+      valorAtual *= 2;
+
+      timerEl.textContent = segundos;
+      valorEl.textContent = formatarValor(valorAtual);
+
+      if (segundos <= 0) {
+        clearInterval(intervalo);
+        mensagemEl.textContent = `O último valor foi ${formatarValor(valorAtual)}`;
+        mensagemEl.style.opacity = 1;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
